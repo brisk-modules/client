@@ -25,7 +25,7 @@
 	"main": "index",
 	"dependencies": {
 		"brisk": "0.x",
-		"grunt-render" : "0.x",
-		"underscore": "1.x"
+		"grunt-render" : "0.3.0",
+		"underscore": "1.6.0"
 	}
 }
