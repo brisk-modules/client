@@ -2,13 +2,14 @@ var brisk = require("brisk"),
 	hbs = require('hbs'),
 	Main = brisk.getClass("main");
 
-var grunt;
+var grunt, app;
 
 var helper = Main.extend({
 
 	init: function( site ){
 
 		grunt = site.modules.app.grunt;
+		app = site.modules.app;
 
 		hbs.registerHelper('grunt', this.grunt);
 		hbs.registerHelper('client', this.client);
@@ -33,12 +34,22 @@ var helper = Main.extend({
 				client[i] = val;
 			}
 		}
+		var script = "var client = "+ JSON.stringify( client ) +";";
+		// get session...
+		app.request.session = app.request.session || {};
+		var session = app.request.session;
 		// check the type of output first?
-		var html = "<script type='text/javascript'> var client = "+ JSON.stringify( client ) +";</script>";
+		if( this._locals.debug || !session ) {
+			var html = '<script type="text/javascript">'+ script +'</script>';
+		} else {
+			var html = '<script type="text/javascript" src="/client.js"></script>';
+			// save client script in session
+			session.client = script;
+		}
 		return new hbs.SafeString( html );
 	},
 
-	
+
 
 	grunt: function(type, name) {
 		var options = {};
