@@ -3,6 +3,8 @@ var brisk = require("brisk"),
 	Main = brisk.getClass("main");
 
 var grunt, app;
+// enviroment state
+var DEV = (process.env.NODE_ENV == "production") ? false : true;
 
 var helper = Main.extend({
 
@@ -69,8 +71,20 @@ var helper = Main.extend({
 			options.files = files();
 		};
 
-		var html = grunt[type]( options );
-		return new hbs.SafeString( html );
+		// only main returns an object (under conditions)
+		if( type == "main" && grunt.options.require.use && grunt.options.require.output == "obj" ){
+			var response = grunt[type]( options );
+			// get session...
+			app.request.session = app.request.session || {};
+			var session = app.request.session;
+			session.client = session.client || "";
+			session.client += response.config;
+			// continue...
+			return new hbs.SafeString( response.output );
+		} else {
+			var html = grunt[type]( options );
+			return new hbs.SafeString( html );
+		}
 
 	}
 
