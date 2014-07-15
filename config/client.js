@@ -9,7 +9,8 @@ module.exports = {
 		use : true
 	},
 	require: {
-		use : true
+		use : true,
+		output: "obj"
 	}
 	//, cdn     : ''
 	//, ssl        : false
