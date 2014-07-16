@@ -72,19 +72,18 @@ var helper = Main.extend({
 		};
 
 		// only main returns an object (under conditions)
-		if( type == "main" && grunt.options.require.use && grunt.options.require.output == "obj" ){
-			var response = grunt[type]( options );
+		var html = grunt[type]( options );
+
+		if( type == "main" && grunt.options.require.use && !grunt.options.require.output ){
 			// get session...
 			app.request.session = app.request.session || {};
 			var session = app.request.session;
 			session.client = session.client || "";
-			session.client += response.config;
+			// include require config
+			session.client += grunt.requireConfig();
 			// continue...
-			return new hbs.SafeString( response.output );
-		} else {
-			var html = grunt[type]( options );
-			return new hbs.SafeString( html );
 		}
+		return new hbs.SafeString( html );
 
 	}
 

@@ -1,3 +1,5 @@
+// enviroment state
+var DEV = (process.env.NODE_ENV == "production") ? false : true;
 
 module.exports = {
 
@@ -10,7 +12,7 @@ module.exports = {
 	},
 	require: {
 		use : true,
-		output: "obj"
+		output:  ( DEV ) ? true : false  // also monitor deploy.debug?
 	}
 	//, cdn     : ''
 	//, ssl        : false
