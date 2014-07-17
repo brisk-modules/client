@@ -2,7 +2,7 @@ var brisk = require("brisk"),
 	hbs = require('hbs'),
 	Main = brisk.getClass("main");
 
-var grunt, app;
+var grunt;
 // enviroment state
 var DEV = (process.env.NODE_ENV == "production") ? false : true;
 
@@ -11,7 +11,6 @@ var helper = Main.extend({
 	init: function( site ){
 
 		grunt = site.modules.app.grunt;
-		app = site.modules.app;
 
 		hbs.registerHelper('grunt', this.grunt);
 		hbs.registerHelper('client', this.client);
@@ -26,7 +25,7 @@ var helper = Main.extend({
 	// output all the local vars on the client-side
 	client: function( name ) {
 		if( !this._locals) return;
-		var escape = ["authenticated", "user", "config"];
+		var escape = ["authenticated", "user", "config", "session"];
 		var client = {};
 		for( var i in this._locals){
 			// escape certain vars
@@ -38,8 +37,7 @@ var helper = Main.extend({
 		}
 		var script = "var client = "+ JSON.stringify( client ) +";";
 		// get session...
-		app.request.session = app.request.session || {};
-		var session = app.request.session;
+		var session = this._locals.session;
 		// check the type of output first?
 		if( this._locals.debug || !session ) {
 			var html = '<script type="text/javascript">'+ script +'</script>';
@@ -73,11 +71,10 @@ var helper = Main.extend({
 
 		// only main returns an object (under conditions)
 		var html = grunt[type]( options );
-
-		if( type == "main" && grunt.options.require.use && !grunt.options.require.output ){
-			// get session...
-			app.request.session = app.request.session || {};
-			var session = app.request.session;
+		// get session...
+		var session = this._locals.session;
+		//
+		if( type == "main" && grunt.options.require.use && !grunt.options.require.output && session ){
 			session.client = session.client || "";
 			// include require config
 			session.client += grunt.requireConfig();
