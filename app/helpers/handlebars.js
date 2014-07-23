@@ -68,6 +68,10 @@ var helper = Main.extend({
 		if( files ){
 			options.files = files();
 		};
+		// pass session if available...
+		if( this._locals.session  ){
+			//options.session  = this._locals.session;
+		}
 
 		// only main returns an object (under conditions)
 		var html = grunt[type]( options );
@@ -77,6 +81,7 @@ var helper = Main.extend({
 		if( type == "main" && grunt.options.require.use && !grunt.options.require.output && session ){
 			session.client = session.client || "";
 			// include require config
+			// could also use: session._require_config
 			session.client += grunt.requireConfig();
 			// continue...
 		}
