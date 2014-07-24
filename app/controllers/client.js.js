@@ -13,6 +13,9 @@ var controller = Main.extend({
 
 	render : function( req, res ){
 		var body = res.data || "";
+		// set expiration headers
+		res.setHeader('Cache-Control', 'public, max-age=2'); // 2 sec
+		res.setHeader('Expires', new Date(Date.now() + 2000).toUTCString());
 		// validate the data before output...
 		return res.send( body );
 	}
