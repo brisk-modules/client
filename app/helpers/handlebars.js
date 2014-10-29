@@ -3,6 +3,8 @@ var brisk = require("brisk"),
 	Main = brisk.getClass("main");
 
 var grunt;
+var blocks = {};
+
 // enviroment state
 var DEV = (process.env.NODE_ENV == "production") ? false : true;
 
@@ -12,15 +14,41 @@ var helper = Main.extend({
 
 		grunt = site.modules.app.grunt;
 
-		hbs.registerHelper('grunt', this.grunt);
-		hbs.registerHelper('client', this.client);
+		this.hbs = hbs;
+		this.setup();
+	},
+
+	setup: function(){
+
+		var Handlebars = this.hbs;
+		// register helpers
+		Handlebars.registerHelper('grunt', this.grunt);
+		Handlebars.registerHelper('client', this.client);
+		Handlebars.registerHelper('extend', this.extend);
+		Handlebars.registerHelper('block', this.block);
 	},
 
 	self: function() {
-		return hbs;
+		return this.hbs;
 	},
 
 	// Helpers
+
+	extend: function(name, context) {
+		var block = blocks[name];
+		if (!block) {
+			block = blocks[name] = [];
+		}
+		block.push(context.fn(this));
+	},
+
+	block: function(name) {
+		var val = (blocks[name] || []).join('\n');
+
+		// clear the block
+		blocks[name] = [];
+		return val;
+	},
 
 	// output all the local vars on the client-side
 	client: function( name ) {
@@ -48,8 +76,6 @@ var helper = Main.extend({
 		}
 		return new hbs.SafeString( html );
 	},
-
-
 
 	grunt: function(type, name) {
 		var options = {};
