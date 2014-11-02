@@ -15,10 +15,15 @@ var helper = Main.extend({
 		grunt = site.modules.app.grunt;
 
 		this.hbs = hbs;
-		this.setup();
+		this._setup();
 	},
 
 	setup: function(){
+
+	},
+
+	// internal
+	_setup: function(){
 
 		var Handlebars = this.hbs;
 		// register helpers
@@ -26,6 +31,8 @@ var helper = Main.extend({
 		Handlebars.registerHelper('client', this.client);
 		Handlebars.registerHelper('extend', this.extend);
 		Handlebars.registerHelper('block', this.block);
+		// user defined
+		this.setup();
 	},
 
 	self: function() {
