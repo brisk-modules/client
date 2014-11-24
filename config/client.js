@@ -4,14 +4,14 @@ var DEV = (process.env.NODE_ENV == "production") ? false : true;
 module.exports = {
 
 	minify: {
-		use : true,
+		use : false,
 		mangle: true
 	},
 	less: {
-		use : true
+		use : false
 	},
 	require: {
-		use : true,
+		use : false,
 		output:  ( DEV ) ? true : false  // also monitor deploy.debug?
 	}
 	//, cdn     : ''
