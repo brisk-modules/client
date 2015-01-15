@@ -12,7 +12,7 @@ module.exports = {
 	},
 	require: {
 		use : false,
-                prefix: "_", // prefix groups with an underscore (TBA)
+		prefix: "_", // prefix groups with an underscore (TBA)
 		output:  ( DEV ) ? true : false  // also monitor deploy.debug?
 	}
 	//, cdn     : ''

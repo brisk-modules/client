@@ -16,6 +16,8 @@ var controller = Main.extend({
 		// set expiration headers
 		res.setHeader('Cache-Control', 'public, max-age=2'); // 2 sec
 		res.setHeader('Expires', new Date(Date.now() + 2000).toUTCString());
+		// MIME type
+		res.header("Content-Type", "application/json");
 		// validate the data before output...
 		return res.send( body );
 	}
