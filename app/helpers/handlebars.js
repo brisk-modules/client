@@ -1,6 +1,6 @@
 var brisk = require("brisk"),
 	hbs = require('hbs'),
-	Main = brisk.getClass("main");
+	Parent = brisk.getClass("main");
 
 var grunt;
 var blocks = {};
@@ -8,7 +8,7 @@ var blocks = {};
 // enviroment state
 var DEV = (process.env.NODE_ENV == "production") ? false : true;
 
-var helper = Main.extend({
+var helper = Parent.extend({
 
 	init: function( site ){
 
@@ -16,6 +16,8 @@ var helper = Main.extend({
 
 		this.hbs = hbs;
 		this._setup();
+		// continue with parent (if available)
+		if( Parent.prototype.init ) return Parent.prototype.init.call(this, site );
 	},
 
 	setup: function(){
