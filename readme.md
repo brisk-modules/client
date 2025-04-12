@@ -30,6 +30,10 @@ Where:
 * _app_ is an instance of Express.js
 * _options_ is a custom config to control the various properties. Review the [default options](./config/client.js).
 
+## Config
+
+* isolation: [boolean] A flag set if we want to run the client in new instances each time initialized, to ensure data isolation
+
 
 ## Credits
 

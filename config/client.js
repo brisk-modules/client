@@ -2,7 +2,7 @@
 var DEV = (process.env.NODE_ENV == "production") ? false : true;
 
 module.exports = {
-
+	isolation: false,
 	minify: {
 		use : false,
 		mangle: true
