@@ -29,7 +29,7 @@ var helper = Parent.extend({
 		var Handlebars;
 		// get rendering engine
 		if( this.site.modules.rendering) {
-			Handlebars = site.modules.rendering;
+			Handlebars = this.site.modules.rendering;
 		} else if( this.site.config.client && this.site.config.client.isolation == "true") {
 			// create a new instance if we want to isolate the engine (in a multi-site env)
 			Handlebars = hbs.create();
