@@ -8,12 +8,14 @@ module.exports = {
 		mangle: true
 	},
 	less: {
-		use : false
+		use : false,
+		lib: "https://cdnjs.cloudflare.com/ajax/libs/less.js/4.4.0/less.min.js"
 	},
 	require: {
 		use : false,
 		prefix: "_", // prefix groups with an underscore (TBA)
-		output:  ( DEV ) ? true : false  // also monitor deploy.debug?
+		output: ( ( DEV ) ? true : false ),  // also monitor deploy.debug?
+		lib: "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"
 	}
 	//, cdn     : ''
 	//, ssl        : false
