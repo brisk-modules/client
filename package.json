@@ -26,6 +26,6 @@
 	"dependencies": {
 		"brisk": ">=0.9.0",
 		"grunt-render" : ">=0.6.8",
-		"underscore": "1.12.1"
+		"underscore": "1.13.8"
 	}
 }
